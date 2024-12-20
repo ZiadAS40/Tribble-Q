@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Happy Learning{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/main.css') }}">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+                <div class="logo">
+                    <i class="fa-brands fa-quinscape"></i> Happy Learning
+                </div>
+                <nav>
+                    <ul>
+                        <li>Meditation</li>
+                        <li>Mental Health</li>
+                        <li>Nutrition</li>
+                        <li>Mindfulness</li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button>Sign in</button>
+                    <button class="signup">Sign up</button>
+                </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,227 @@
+:root {
+    --background-color: #1a1a1a;
+    --header-background-color: #333;
+    --primary-color: #4a90e2;
+    --text-color: #fff;
+    --hero-background-color: #000;
+    --feature-background-color: #333;
+    --testimonial-background-color: #1a1a1a;
+    --plan-background-color: #333;
+    --plan-card-background-color: #444;
+    --footer-background-color: #000;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 32px;
+    margin: 0 50px;
+    padding: 0 20px;
+}
+
+section {
+    min-height: 80vh;
+}
+/* start the header section */
+header {
+    background-color: var(--header-background-color);
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.logo i {
+    margin-right: 10px;
+    font-size: 32px;
+}
+
+.container nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.container .auth-buttons button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container .auth-buttons .signup {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+/* end the header section */
+
+
+/* start the hero section */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    background-color: var(--hero-background-color);
+
+}
+
+.hero-container {
+    grid-column: 4 / span 7;
+    max-width: 800px;
+    margin: 0 auto; 
+}
+
+.hero .hero-container i {
+    font-size: 180px;
+    margin-bottom: 30px;
+}
+
+.hero .hero-container h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.hero .hero-container button {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 50px;
+    margin-top: 30px;
+}
+
+/* end the hero section */
+
+
+/* start the features section */
+.features {
+    padding: 50px 20px;
+    background-color: var(--feature-background-color);
+    text-align: center;
+}
+
+.features h2 {
+    margin-bottom: 30px;
+    grid-column: 4 / span 5;
+    text-align: center;
+    font-size: 50px;
+}
+
+.feartures-container {
+    grid-column: 2/ span 10;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: auto;
+    height: 40vh;
+}
+
+.features .feature {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid var(--plan-card-background-color);
+    height: 300px;
+    width: 300px;
+
+}
+
+.features .feature p {
+    margin: 40px 50px;
+}
+
+.features .feature i {
+    color: var(--primary-color);
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 60px;
+}
+/* end the features section */
+
+.testimonials {
+    padding: 50px 20px;
+    background-color: var(--testimonial-background-color);
+    text-align: center;
+
+}
+
+.testimonials h2 {
+    margin-bottom: 30px;
+}
+
+.testimonials .testimonial {
+    margin-bottom: 20px;
+}
+
+.plans {
+    padding: 50px 20px;
+    background-color: var(--plan-background-color);
+    text-align: center;
+
+}
+
+.plans h2 {
+    margin-bottom: 30px;
+}
+
+.plans .plan {
+    display: inline-block;
+    width: 200px;
+    margin: 0 10px;
+    padding: 20px;
+    background-color: var(--plan-card-background-color);
+    border-radius: 10px;
+}
+
+.plans .plan ul {
+    list-style: none;
+    padding: 0;
+}
+
+.plans .plan button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* start the footer section */
+
+footer {
+    background-color: var(--footer-background-color);
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+/* start the footer section */
+
