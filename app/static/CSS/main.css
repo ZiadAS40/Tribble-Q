@@ -1,3 +1,4 @@
+
 :root {
     --background-color: #1a1a1a;
     --header-background-color: #333;
@@ -124,7 +125,7 @@ header .container {
 
 .features h2 {
     margin-bottom: 30px;
-    grid-column: 4 / span 5;
+    grid-column: 5 / span 4;
     text-align: center;
     font-size: 50px;
 }
