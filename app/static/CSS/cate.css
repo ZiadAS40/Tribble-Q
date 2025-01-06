@@ -1,0 +1,112 @@
+:root {
+    --background-color: #1a1a1a;
+    --header-background-color: #333;
+    --primary-color: #4a90e2;
+    --text-color: #fff;
+    --hero-background-color: #000;
+    --feature-background-color: #333;
+    --testimonial-background-color: #1a1a1a;
+    --plan-background-color: #333;
+    --plan-card-background-color: #444;
+    --footer-background-color: #000;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.cate .container, .english .container{
+    display: grid;
+    grid-template-rows: repeat(12, 1fr);
+    grid-gap: 20px;
+    height: 100%;
+}
+
+
+.cate, .english {
+    height: 80vh;
+}
+
+.card {
+    background-color: var(--plan-card-background-color);
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+}
+
+.card1 { grid-area: 1 / 1 / span 6 / span 4; }
+.card2 { grid-area: 1 / 5 / span 6 / span 4; }
+.card3 { grid-area: 1 / 9 / span 6 / span 4; }
+.card4 { grid-area: 6 / 1 / span 6 / span 4; }
+.card5 { grid-area: 6 / 5 / span 6 / span 4; }
+.card6 { grid-area: 6 / 9 / span 6 / span 4; }
+
+
+.card-image {
+    width: 100%;
+    height: 40%;
+    border-radius: 30px;
+    background-image: url('../Images/OIP.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+}
+  
+.card ul {
+    font-size: 15px;
+    font-weight: normal;
+
+}
+
+
+.cate-button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 40%;
+    cursor: pointer;
+    border: none;
+
+}
+
+.cate-button:hover {
+    background-color: #333;
+    color: var(--primary-color);
+}
+
+/*acur*/
+
+
+.progress-ring {
+    width: 20px;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  
+  .progress-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--primary-color   ) 0% 30%, 
+      var(--plan-background-color) 30% 100%  
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .progress-text {
+    font-size: 4px;
+    font-weight: bold;
+    color: #333;
+    position: absolute;
+  }

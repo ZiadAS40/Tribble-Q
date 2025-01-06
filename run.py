@@ -1,37 +1,38 @@
-#!/usr/bin/env python3
+# #!/usr/bin/env python3
 
-from config import DevelopmentConfig, TestingConfig, ProductionConfig
-import os
-from flask import Blueprint, Flask
-from flask_cors import CORS
-import os
-from config import DevelopmentConfig, TestingConfig, ProductionConfig
+# from config import DevelopmentConfig, ProductionConfig
+# import os
+# from flask import Blueprint, Flask
+# from flask_sqlalchemy import SQLAlchemy
+# from flask_cors import CORS
+# import os
+
+# # db = SQLAlchemy()
+
+# def create_app(config_class=DevelopmentConfig):
+#     """
+#     Create and configure the Flask application.
+#     """
+#     app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
+#     app.config.from_object(config_class)
+
+#     from app.routes import routes_bp
+#     from app.auth import auth
+
+#     app.register_blueprint(routes_bp)
+#     app.register_blueprint(auth)
+
+#     return app
 
 
 
-def create_app(config_class=DevelopmentConfig):
-    """
-    Create and configure the Flask application.
-    """
-    app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
-    app.config.from_object(config_class)
+# env = os.environ.get('FLASK_ENV', 'development')
+# if env == 'production':
+#     app = create_app(ProductionConfig)
+# else:
+#     app = create_app(DevelopmentConfig)
 
-    from api.v1.views import api_v1
-    from app.routes import routes_bp
-
-    app.register_blueprint(routes_bp)
-    app.register_blueprint(api_v1)
-
-    return app
-
-
-env = os.environ.get('FLASK_ENV', 'development')
-if env == 'production':
-    app = create_app(ProductionConfig)
-elif env == 'testing':
-    app = create_app(TestingConfig)
-else:
-    app = create_app(DevelopmentConfig)
-
+# db = SQLAlchemy(app)
+from app.routes import app
 if __name__ == "__main__":
-    app.run()
+    app.run(host="localhost", port=5000, debug=True)

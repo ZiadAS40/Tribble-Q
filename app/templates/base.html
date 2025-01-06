@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Happy Learning{% endblock %}</title>
+    <title>{% block title %}QQQ{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/signup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/cate.css') }}">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -12,7 +14,7 @@
     <header>
         <div class="container">
                 <div class="logo">
-                    <i class="fa-brands fa-quinscape"></i> Happy Learning
+                    <span>Tripple </span><i class="fa-brands fa-quinscape"></i>
                 </div>
                 <nav>
                     <ul>
@@ -23,8 +25,8 @@
                     </ul>
                 </nav>
                 <div class="auth-buttons">
-                    <button>Sign in</button>
-                    <button class="signup">Sign up</button>
+                    <button class="login" onclick="location.href='{{ url_for('auth.login')}}'">Log in</button>
+                    <button class="signup" onclick="location.href='{{ url_for('auth.signup') }}'">Sign up</button>
                 </div>
         </div>
     </header>

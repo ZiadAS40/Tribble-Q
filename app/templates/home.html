@@ -2,18 +2,18 @@
 
 {% block content %}
 <main>
-    <section class="hero">
+    <section class="hero" id="home">
         <div class="containter">
             <div class="hero-container">
                 <i class="fa-brands fa-quinscape"></i>
                 <h1>Improve your knowledge and find your happiness</h1>
-                <button>Start learning</button>
-                <button>Start learning</button>
+                <button onclick="location.href='{{ url_for('cate') }}'">Explore</button>
+                <button onclick="document.getElementById('features').scrollIntoView({ behavior: 'smooth' });">Subscribe</button>
             </div>
         </div>
     </section>
 
-    <section class="features">
+    <section class="features" id="features">
         <div class="container">
 
             <h2>Our features</h2>

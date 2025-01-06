@@ -29,7 +29,7 @@ body {
 }
 
 section {
-    min-height: 80vh;
+    min-height: 90vh;
 }
 /* start the header section */
 header {
@@ -53,8 +53,10 @@ header .container {
 }
 
 .logo i {
-    margin-right: 10px;
     font-size: 32px;
+    margin-right: 10px;
+    margin-left: 5px;
+    
 }
 
 .container nav ul {
