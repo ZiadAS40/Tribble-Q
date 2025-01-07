@@ -2,7 +2,7 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from datetime import timedelta
 from flask_cors import CORS
 from flask import render_template
@@ -30,7 +30,7 @@ login_manager = LoginManager(app)
 def load_user(user_id):
     """implement the session manager"""
     from .models.user import User
-    return User.query.get(user_id)
+    return User.query.filter_by(id=user_id).first()
 
 @app.route('/')
 def home():
@@ -46,7 +46,11 @@ def quiz():
 
 @app.route('/quiz/english')
 def en():
-    return render_template('english.html')
+    from app.models.quiz import Quiz
+    if current_user.is_anonymous:
+        return render_template('login.html')
+    quiz = Quiz.query.filter_by().first()
+    return render_template('english.html', quiz_id=quiz.id, user_id=current_user.id)
 
 from .auth import auth
 from api.v1.views import api_v1

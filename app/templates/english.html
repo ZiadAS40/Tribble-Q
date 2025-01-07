@@ -12,17 +12,18 @@
                     <li>Number of atempers: 122</li>
                     <li>percent of Success:  23%</li>
                 </ul>
-            <button class="cate-button" onclick="location.href='{{ url_for('quiz') }}'">Explore</button>
+            <button class="cate-button" onclick="location.href='{{ url_for('quiz', quiz_id=quiz_id, user_id=user_id) }}'">Explore</button>
         </div>
         <div class="card card2">
             <div class="card-image"></div>
                 <ul>
                     <li>Enhance your vocabulary and grammar skills.</li>
-                    <li>Explore classic and contemporary literature.</li>
-                    <li>Improve your writing and communication abilities.</li>
-                    <li>Engage in interactive language exercises</li>
+                    <li>Enhance your vocabulary and grammar skills.</li>
+                    <li>Enhance your vocabulary and grammar skills.</li>
+                    <li>Enhance your vocabulary and grammar skills.</li>
                 </ul>
-            <button class="cate-button">Explore</button>
+
+                <button class="cate-button" onclick="getQuiz('{{ quiz_id }}', '{{ user_id }}')">Explore</button>
         </div>
         <div class="card card3">
             <div class="card-image"></div>

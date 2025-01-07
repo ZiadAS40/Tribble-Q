@@ -8,7 +8,7 @@ from app.routes import db
 
 
 
-class User(db.Model,  UserMixin, BaseModel):
+class User(UserMixin, BaseModel,db.Model):
     __tablename__ = 'users'
 
     username = db.Column(db.String(40), nullable=False, unique=True)

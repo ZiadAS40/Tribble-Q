@@ -1,0 +1,73 @@
+:root {
+    --background-color: #1a1a1a;
+    --header-background-color: #333;
+    --primary-color: #4a90e2;
+    --text-color: #fff;
+    --hero-background-color: #000;
+    --feature-background-color: #333;
+    --testimonial-background-color: #1a1a1a;
+    --plan-background-color: #333;
+    --plan-card-background-color: #444;
+    --footer-background-color: #000;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+#next-button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+#quiz-container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+    height: 600px;
+}
+.answers label {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: var(--primary-color);
+}
+
+.answers input[type="radio"] {
+   display: none;
+}
+.answers input[type="radio"]:checked + span {
+    display: block;
+    background-color: #b60303;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+.answers {
+    margin-bottom: 20px;
+}
+.answers label {
+    display: block;
+    margin-bottom: 5px;
+}
+#progress-bar-container {
+width: 100%;
+background-color: #f3f3f3;
+border-radius: 5px;
+overflow: hidden;
+margin-bottom: 20px;
+}
+#progress-bar {
+height: 20px;
+width: 0;
+background-color: var(--primary-color);
+transition: width 1s linear;
+}

@@ -1,161 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Page</title>
-    <style>
-        #quiz-container {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .answers label {
-            display: block;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer;
-        }
 
-        .selected {
-            background-color: red;
-        }
-    
-        .answers input[type="radio"] {
-           display: none;
-        }
-        .answers input[type="radio"]:checked + span {
-            display: block;
-            background-color: #b60303;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-        .answers {
-            margin-bottom: 20px;
-        }
-        .answers label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
+
+
+{% block content %}
+<section>
+
     <div id="quiz-container">
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
         <div class="question" id="question-title"></div>
         <div class="answers" id="answers-container"></div>
         <button id="next-button" onclick="nextQuestion()">Next</button>
-    </div>
 
-    <script>
-        const questions = [
-            {
-                title: "Question 1: What is the capital of France?",
-                answers: ["Paris", "London", "Berlin", "Madrid"]
-            },
-            {
-                title: "Question 2: What is 2 + 2?",
-                answers: ["3", "4", "5", "6"]
-            },
-            {
-                title: "Question 3: What is the largest planet in our solar system?",
-                answers: ["Earth", "Mars", "Jupiter", "Saturn"]
-            }
-        ];
-
-        let currentQuestionIndex = 0;
-        const userAnswers = {};
-
-        console.log("got here");
-
-        document.querySelectorAll('.answers input[type="radio"]').forEach((radio) => {
-            console.log("radio");
-        radio.addEventListener('change', function() {
-        document.querySelectorAll('.answer').forEach((answer) => {
-            answer.classList.remove('selected');
-        });
-        if (this.checked) {
-            this.parentElement.classList.add('selected');
-        }
-        console.log("this");
-    });
-});
-
-
-        function renderQuestion() {
-            const question = questions[currentQuestionIndex];
-            document.getElementById('question-title').innerText = question.title;
-            const answersContainer = document.getElementById('answers-container');
-            answersContainer.innerHTML = '';
-            question.answers.forEach((answer, index) => {
-                const answerElement = document.createElement('div');
-                answerElement.innerHTML = `
-                    <label>
-                        <input type="radio" name="answer" value="${index}">
-                        ${answer}
-                    </label>
-                `;
-                answersContainer.appendChild(answerElement);
-            });
-
-            document.getElementById('next-button').innerText = currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next';
-        }
-
-        function nextQuestion() {
-            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
-            if (!selectedAnswer) {
-                alert("Please select an answer.");
-                return;
-            }
-
-            userAnswers[`question_${currentQuestionIndex + 1}`] = selectedAnswer.value;
-
-            if (currentQuestionIndex === questions.length - 1) {
-                submitQuiz();
-            } else {
-                currentQuestionIndex++;
-                renderQuestion();
-            }
-        }
-
-        function submitQuiz() {
-            const userId = '12345'; // Replace with actual user ID
-            fetch('/api/vi/quiz/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'user_id': userId,
-                    'answers': JSON.stringify(userAnswers)
-                }
-            }).then(response => {
-                if (response.ok) {
-                    alert("Quiz submitted successfully!");
-                } else {
-                    alert("Failed to submit quiz.");
-                }
-            });
-        }
-
-        renderQuestion();
-    </script>
-</body>
-</html>
-
-<!-- this is the quiz bage, make the html and the css and js if needed, so the page is a questions, every question have a title and four radio 
- elements represents the answers, 
- the page should have one quesion and a button next, 
- when clicked render the next quesion, 
- in the last one it should be submit instead of next, 
- in submit make a post request to the endpoint '/api/vi/quiz/submit'
-  with a the user_id and dict contain every quesiton and the user 
-  answers as requst headers -->
+    </section>
+    
+{% endblock %}

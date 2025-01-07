@@ -12,7 +12,7 @@ time = "%Y-%m-%dT%H:%M:%S.%f"
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
     
-    id = db.Column(db.String(60), primary_key=True, default=str(uuid.uuid4()))
+    id = db.Column(db.String(60), primary_key=True, default=lambda: str(uuid.uuid4()))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -46,11 +46,6 @@ class BaseModel:
     def save(self):
         """updates the attribute 'updated_at' with the current datetime"""
         self.updated_at = datetime.utcnow()
-        # from app.models.user import User
-        # from app.models.quiz import Quiz
-        # from app.models.question import Question
-
-        # db.create_all()
         db.session.add(self)
         db.session.commit()
 
