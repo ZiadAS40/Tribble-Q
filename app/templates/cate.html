@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
 
+{% block title %}Categories{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='CSS/cate.css') }}">
+{% endblock %}
+
 {% block content %}
 <section class="cate">
     <div class="container">

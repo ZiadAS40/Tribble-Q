@@ -1,54 +1,26 @@
 
 let questions = [
-    {
-        title: "Question 1: What is the capital of France?",
-        answers: ["Paris", "London", "Berlin", "Madrid"]
-    },
-    {
-        title: "Question 2: What is 2 + 2?",
-        answers: ["3", "4", "5", "6"]
-    },
-    {
-        title: "Question 3: What is the largest planet in our solar system?",
-        answers: ["Earth", "Mars", "Jupiter", "Saturn"]
-    }
+    
 ];
 
-// let user_id = null;
-// let quiz_id = null;
-// let q;
+const quizContainer = document.getElementById('quiz-container');
 
-// console.log('quiz_id:', quiz_id);
-// console.log('user_id:', user_id);
-// console.log('questions:', questions);
-
-// function glabalizer(q_id, u_id, qus) {
-//     user_id = u_id;
-//     quiz_id = q_id;
-//     questions = qus;
-//     q = q_id;
-// }
-// async function getQuiz(quiz_id, user_id) {
-//     console.log('getQuiz called with:', quiz_id, user_id);
-//     try {
-//         const response = await fetch(`/api/v1/quiz/${quiz_id}`);
-//         const data = await response.json();
-//         location.href = "/quiz";
-//         questions = data;
-//         console.log('data:', questions);
-//     } catch (error) {
-//         console.error('Error fetching quiz:', error);
-//     }
-//     console.log('data:', questions);
-// }
-
-// (async () => {
-//     await getQuiz(quiz_id, user_id);
-//     console.log('q after', q);
-// })();
+// Retrieve the quiz_id and user_id from the data attributes
+const quizId = quizContainer.getAttribute('data-quiz-id');
+const userId = quizContainer.getAttribute('data-user-id');
 
 
-// console.log('q after', q);
+fetch(`/api/v1/quiz/${quizId}`)
+    .then(response => response.json())
+    .then(data => {
+        questions = data; // Assuming the server returns an object with a 'questions' array
+        currentQuestionIndex = 0; // Reset the question index
+        console.log(questions);
+        renderQuestion(); // Render the first question
+    })
+    .catch(error => {
+        alert('Failed to load quiz. Please try again later.');
+});
 
 let timeLeft = 60;
 const progressBar = document.getElementById('progress-bar');
@@ -73,9 +45,9 @@ const userAnswers = {};
 
 
 function renderQuestion() {
-    console.log('renderQuestion called with:', questions);
+    console.log('renderQuestion called');
     const question = questions[currentQuestionIndex];
-    document.getElementById('question-title').innerText = question.title;
+    document.getElementById('question-title').innerText = question.tittle;
     const answersContainer = document.getElementById('answers-container');
     answersContainer.innerHTML = '';
     question.answers.forEach((answer, index) => {
@@ -105,6 +77,7 @@ function renderQuestion() {
             }
         });
     });
+
 }
 function nextQuestion() {
     const selectedAnswer = document.querySelector('input[name="answer"]:checked');
@@ -113,7 +86,7 @@ function nextQuestion() {
         return;
     }
 
-    userAnswers[questions[currentQuestionIndex + 1]["id"]] = selectedAnswer.value;
+    userAnswers[questions[currentQuestionIndex]["id"]] = selectedAnswer.value;
 
     if (currentQuestionIndex === questions.length - 1) {
         submitQuiz();
@@ -124,8 +97,9 @@ function nextQuestion() {
 }
 
 function submitQuiz() {
-    const userId = user_id; // Replace with actual user ID
-    fetch(`/api/vi/quiz/${quiz_id}/submit`, {
+ // Replace with actual user ID
+ console.log(userAnswers);
+    fetch(`/api/v1/quiz/${quizId}/submit`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -139,8 +113,8 @@ function submitQuiz() {
             alert("Failed to submit quiz.");
         }
     });
+    location.href = '/';
 }
 
+
 renderQuestion();
-
-

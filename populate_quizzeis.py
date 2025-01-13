@@ -14,6 +14,7 @@ with app.app_context():
         instructions="Choose the correct answer for each question.",
         time=30,  # 30 minutes
         description="Test your knowledge of basic English grammar.",
+        cate = "en",
         quiz_owner_id=user.id  # Replace with actual owner ID
     )
 

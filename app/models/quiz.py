@@ -14,3 +14,4 @@ class Quiz(BaseModel, db.Model):
     description = db.Column(db.String(255), nullable=False)
     questions = db.relationship('Question', backref='quiz', cascade='all, delete-orphan')
     quiz_owner_id = db.Column(db.String(60), db.ForeignKey('users.id'))
+    cate = db.Column(db.String(40), nullable=False)

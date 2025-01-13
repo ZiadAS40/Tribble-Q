@@ -1,11 +1,16 @@
 
 {% extends "base.html" %}
 
+{% block title %}Quiz{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='CSS/quiz.css') }}">
+{% endblock %}
 
 {% block content %}
 <section>
 
-    <div id="quiz-container">
+    <div id="quiz-container" data-quiz-id="{{ quiz_id }}" data-user-id="{{ user_id }}">
         <div id="progress-bar-container">
             <div id="progress-bar"></div>
         </div>
@@ -14,5 +19,9 @@
         <button id="next-button" onclick="nextQuestion()">Next</button>
 
     </section>
-    
 {% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='JS/quiz.js') }}"></script>
+{% endblock %}
+

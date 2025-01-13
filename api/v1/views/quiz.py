@@ -1,12 +1,14 @@
 #!usr/bin/env python3
 
-from flask import request, jsonify
+from flask import request, jsonify, redirect, url_for
 
 from flask_login import current_user
 from api.v1.views import api_v1
+import json
+from app.auth import auth
 
 
-@api_v1.route('/quiz/<quiz_id>', methods=['GET'], strict_slashes=False)
+@api_v1.route('/quiz/<string:quiz_id>', methods=['GET'], strict_slashes=False)
 def get_quiz(quiz_id):
     """Get a quiz"""
     from app.models.question import Question
@@ -14,7 +16,7 @@ def get_quiz(quiz_id):
     questions = Question.query.filter_by(quiz_id=quiz_id).all()
 
     for question in questions:
-        qu = {"tittle":question.question, "answers":question.answer.split(","), "id":question.id}
+        qu = {"tittle":question.question, "answers":question.options.split(","), "id":question.id}
         list_of_questions.append(qu)
     
     return jsonify(list_of_questions), 200
@@ -24,14 +26,23 @@ def submit_quiz(quiz_id):
     """Submit a quiz"""
     from app.models.question import Question
     from app.models.quiz import Quiz
-    user_answers = request.json()
+    user_answers = request.headers.get('answers')
     quiz = Quiz.query.filter_by(id=quiz_id).first()
     score = 0
-    for question_id, answer in user_answers.items():
+    for question_id, answer in json.loads(user_answers).items():
         question = Question.query.filter_by(id=question_id).first()
         if question.is_right(answer):
             score += 1
-    # update the user's quiz results
-    current_user.quiz_results[quiz_id] = f"{score}/{len(quiz.questions)}"
+    print(score)
+
+    if current_user.is_authenticated:
+        from app.models.user import User
+        user = User.query.filter_by(id=current_user.id).first()
+        user.quiz_results = f"{quiz_id}:{score}/{len(Question.query.filter_by(quiz_id=quiz_id).all())}"
+        user.save()
+        print(current_user.quiz_results)
+    else:
+        print("User not authenticated")
+        return redirect(url_for('auth.login'))
 
     return jsonify({len(quiz.questions): score})

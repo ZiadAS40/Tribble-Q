@@ -1,79 +1,53 @@
 {% extends "base.html" %}
 
 
-{% block content %}
-<section class="english">
-    <div class="container">
-        <div class="card card1">
-            <div class="card-image"></div>
-                <ul>
-                    <li>Quiz Tittle: english b2</li>
-                    <li>Number of Questions: 14.</li>
-                    <li>Number of atempers: 122</li>
-                    <li>percent of Success:  23%</li>
-                </ul>
-            <button class="cate-button" onclick="location.href='{{ url_for('quiz', quiz_id=quiz_id, user_id=user_id) }}'">Explore</button>
-        </div>
-        <div class="card card2">
-            <div class="card-image"></div>
-                <ul>
-                    <li>Enhance your vocabulary and grammar skills.</li>
-                    <li>Enhance your vocabulary and grammar skills.</li>
-                    <li>Enhance your vocabulary and grammar skills.</li>
-                    <li>Enhance your vocabulary and grammar skills.</li>
-                </ul>
-
-                <button class="cate-button" onclick="getQuiz('{{ quiz_id }}', '{{ user_id }}')">Explore</button>
-        </div>
-        <div class="card card3">
-            <div class="card-image"></div>
-            <ul>
-                <li>Enhance your vocabulary and grammar skills.</li>
-                <li>Explore classic and contemporary literature.</li>
-                <li>Improve your writing and communication abilities.</li>
-                <li>Engage in interactive language exercises</li>
-            </ul>
-            <button class="cate-button">Explore</button>
-        </div>
-        <div class="card card4">
-            <div class="card-image"></div>
-            <ul>
-                <li>Enhance your vocabulary and grammar skills.</li>
-                <li>Explore classic and contemporary literature.</li>
-                <li>Improve your writing and communication abilities.</li>
-                <li>Engage in interactive language exercises</li>
-            </ul>
-            <button class="cate-button">Explore</button>
-        </div>
-        <div class="card card5">
-            <div class="card-image"></div>
-            <ul>
-                <li>Enhance your vocabulary and grammar skills.</li>
-                <li>Explore classic and contemporary literature.</li>
-                <li>Improve your writing and communication abilities.</li>
-                <li>Engage in interactive language exercises</li>
-            </ul>
-            <button class="cate-button">Explore</button>
-
-        </div>
-        <div class="card card6">
-            <div class="card-image"></div>
-            <ul>
-                <li>Enhance your vocabulary and grammar skills.</li>
-                <li>Explore classic and contemporary literature.</li>
-                <li>Improve your writing and communication abilities.</li>
-                <li>Engage in interactive language exercises</li>
-            </ul>
-            <button class="cate-button">Explore</button>
-        </div>
-    </div>
-</section>
+{% block title %}
+    English
 {% endblock %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/english.css') }}">
+{% endblock %}
 
-
-<!-- <div class="progress-ring">
-    <div class="progress-circle">
-      <span class="progress-text">40%</span>
-    </div>
-  </div> -->
+{% block content %}
+<section class="english">
+    <div class="card-container">
+            {% for quiz in quizzes %}
+            <div class="card" onclick="location.href='{{ url_for('quiz', quiz_id=quiz.id) }}'">
+                <div class="card-header">
+                    <span class="badge">{{ quiz.users_with_quiz }} Enrolled</span>
+                    <img src="../static/Images/OIP.jpg" alt="Course Image" class="card-image">
+                </div>
+                <div class="card-body">
+                    <h3>{{ quiz.title }}</h3>
+                    <div class="progress-container">
+                        <div class="progress">
+                            <div class="circle">
+                                <span>{{ quiz.success_rate }}%</span>
+                            </div>
+                            <p>Accuracy <i class="fas fa-info-circle"></i></p>
+                        </div>
+                        <div class="progress">
+                            <div class="circle">
+                                <span>{{ quiz.avg_score }}%</span>
+                            </div>
+                            <p>Success Rate <i class="fas fa-info-circle"></i></p>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">{{ quiz.cate }}</span>
+                        <span class="tag">Not Urgent</span>
+                    </div>
+                    <div class="footer">
+                        <span>Edited 2h ago</span>
+                        <span><i class="fas fa-question-circle"></i> {{ quiz.num_of_questions }} Questions</span>
+                        <span><i class="fas fa-ellipsis-h"></i></span>
+                    </div>
+                </div>
+            </div>
+            
+            {% endfor %}
+        </div>
+    </section>
+    {% endblock %}
+   
