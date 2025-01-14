@@ -163,17 +163,8 @@ header .container {
 }
 /* end the features section */
 
+/* start the plan section */
 
-
-
-/* start the footer section */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1a1a1a;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-}
 
 .pricing-plans {
     text-align: center;
@@ -202,6 +193,27 @@ body {
 .plan li {
     margin: 10px 0;
 }
+
+.plan button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+/* start the footer section */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+
 
 button {
     background-color: #fff;
