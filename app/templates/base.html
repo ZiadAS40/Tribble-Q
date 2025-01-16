@@ -91,23 +91,5 @@
 
     {% endblock %}
     <script src="{{ url_for('static', filename='JS/flash-messages.js') }}"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var popup = document.getElementById('popup');
-            var closeButton = document.querySelector('.close-button');
-
-            function showPopup(message) {
-                document.getElementById('popup-message').textContent = message;
-                popup.style.display = 'block';
-            }
-
-            function hidePopup() {
-                popup.style.display = 'none';
-            }
-
-            closeButton.addEventListener('click', hidePopup);
-        });
-    </script>
 </body>
 </html>

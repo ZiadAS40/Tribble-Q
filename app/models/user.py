@@ -8,7 +8,8 @@ from app.routes import db
 
 
 
-class User(UserMixin, BaseModel,db.Model):
+class User(UserMixin, BaseModel, db.Model):
+    from .quiz_result import QuizResult
     __tablename__ = 'users'
 
     username = db.Column(db.String(40), nullable=False, unique=True)
@@ -17,6 +18,9 @@ class User(UserMixin, BaseModel,db.Model):
     quiz_results = db.Column(db.String(255), nullable=True)
     role = db.Column(db.String(40), nullable=False, default='student')
     active = db.Column(db.Boolean(), default=True)
+
+
+    quiz_results = db.relationship('QuizResult', back_populates='user', cascade='all, delete-orphan')
 
 
     def __init__(self, *args, **kwargs):

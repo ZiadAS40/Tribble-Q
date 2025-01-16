@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from datetime import timedelta
 from flask_cors import CORS
-from flask import render_template
+from flask import render_template, make_response, jsonify
 import os
 import secrets
 
@@ -47,14 +47,20 @@ def cate():
 
 @app.route('/quiz/<string:quiz_id>')
 def quiz(quiz_id):
+    from app.models.quiz_result import QuizResult
+    result = QuizResult.query.filter_by(user_id=current_user.id, quiz_id=quiz_id).first()
+    if result:
+        return make_response(jsonify({"error": "You already toke this Quiz"}), 400)
     if current_user.is_anonymous:
         return render_template('login.html')
+    
     return render_template('quiz.html', quiz_id=quiz_id, user_id=current_user.id)
 
 @app.route('/quiz/english')
 def en():
     from app.models.quiz import Quiz
     from app.models.user import User
+    from app.models.quiz_result import QuizResult
     quizzes_en = []
     quizzes = Quiz.query.filter_by(cate="en").all()
 
@@ -63,37 +69,28 @@ def en():
         success_threshold = 0.5
         q["title"] = quiz.title
         all_users = User.query.all()
-        all_users_with_quiz = [
-            user for user in all_users
-            if user.quiz_results is not None and str(quiz.id) in user.quiz_results
-        ]
+        results = QuizResult.query.filter_by(quiz_id=quiz.id).all()
+        
         acc = 0
         acc_l = 0
-        for user in all_users_with_quiz:
-            if user.quiz_results is not None:
-                results = user.quiz_results
-        
-                acc += int(results.split(":")[1].split("/")[0])
-                acc_l += int(results.split(":")[1].split("/")[1])
+        for result in results:
+            acc += result.score
+            acc_l += len(quiz.questions)
 
                 
         q["avg_score"] = round((acc / acc_l * 100 if acc_l > 0 else 0), 1)
 
 
         suc_users = [
-            user for user in all_users_with_quiz
-            if user.quiz_results and len(user.quiz_results.split(":")) > 1
-            for quiz_result in user.quiz_results.split(",")
-            if len(quiz_result.split(":")) > 1
-            for result in [quiz_result.split(":")[1]]
-            if len(result.split("/")) == 2
-            for u, a in [(int(result.split("/")[0]), int(result.split("/")[1]))]
-            if u / a > success_threshold
+            quiz_result.user for quiz_result in results if quiz_result.score / len(quiz.questions) >= success_threshold
         ]
 
         q["suc_users"] = len(suc_users)
-        q["users_with_quiz"] = len(all_users_with_quiz)
-        q["success_rate"] = round((len(suc_users) / len(all_users_with_quiz) * 100 if len(all_users_with_quiz) > 0 else 0), 1)
+        q["users_with_quiz"] = len(results)
+        print(len(suc_users))
+        print(len(results))
+        q["success_rate"] = round((len(suc_users) / len(results) * 100 if len(results) > 0 else 0), 1)
+        print(q["success_rate"])
         q["time"] = quiz.time
         q["id"] = quiz.id
         q["cate"] = quiz.cate

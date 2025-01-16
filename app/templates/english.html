@@ -13,7 +13,7 @@
 <section class="english">
     <div class="card-container">
             {% for quiz in quizzes %}
-            <div class="card" onclick="location.href='{{ url_for('quiz', quiz_id=quiz.id) }}'">
+            <div class="card" onclick="handleQuizClick('{{ url_for('quiz', quiz_id=quiz.id) }}')">
                 <div class="card-header">
                     <span class="badge">{{ quiz.users_with_quiz }} Enrolled</span>
                     <img src="../static/Images/OIP.jpg" alt="Course Image" class="card-image">
@@ -23,13 +23,13 @@
                     <div class="progress-container">
                         <div class="progress">
                             <div class="circle">
-                                <span>{{ quiz.success_rate }}%</span>
+                                <span>{{ quiz.avg_score }}%</span>
                             </div>
                             <p>Accuracy <i class="fas fa-info-circle"></i></p>
                         </div>
                         <div class="progress">
                             <div class="circle">
-                                <span>{{ quiz.avg_score }}%</span>
+                                <span>{{ quiz.success_rate }}%</span>
                             </div>
                             <p>Success Rate <i class="fas fa-info-circle"></i></p>
                         </div>
@@ -49,5 +49,9 @@
             {% endfor %}
         </div>
     </section>
+    {% endblock %}
+
+    {% block scripts %}
+    <script src="{{ url_for('static', filename='JS/english.js') }}"></script>
     {% endblock %}
    

@@ -33,16 +33,19 @@ def submit_quiz(quiz_id):
         question = Question.query.filter_by(id=question_id).first()
         if question.is_right(answer):
             score += 1
-    print(score)
+    
+
+
 
     if current_user.is_authenticated:
         from app.models.user import User
+        from app.models.quiz_result import QuizResult
         user = User.query.filter_by(id=current_user.id).first()
-        user.quiz_results = f"{quiz_id}:{score}/{len(Question.query.filter_by(quiz_id=quiz_id).all())}"
-        user.save()
-        print(current_user.quiz_results)
-    else:
-        print("User not authenticated")
-        return redirect(url_for('auth.login'))
+        user_quiz = QuizResult.query.filter_by(user_id=user.id, quiz_id=quiz.id).first()
+        if user_quiz:
+            return jsonify({"error": "You already toke this Quiz"}), 400
+        quiz_result = QuizResult(user_id=user.id, quiz_id=quiz.id, score=score)
+        quiz_result.save()
+
 
     return jsonify({len(quiz.questions): score})
