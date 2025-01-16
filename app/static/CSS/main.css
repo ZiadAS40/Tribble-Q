@@ -166,45 +166,96 @@ header .container {
 
 /* start the plan section */
 
+.plan-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-template-rows: repeat(5, 1fr);
+    gap: 32px;
+    margin: 0 auto;
+    padding: 0 20px;
+    max-width: 1200px;
+
+}
 
 .pricing-plans {
-    text-align: center;
+    background-color: #1c1c1c;
+    color: #fff;
     padding: 50px 0;
+    text-align: center;
+}
+
+.pricing-plans h1 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    grid-row: 1 / span 1;
+    grid-column: 1 / -1;
 }
 
 .plan {
-    display: inline-block;
+    grid-row: 2 / span 2;
     background-color: #333;
     border-radius: 10px;
-    margin: 20px;
+    grid-column: span 1;
     padding: 20px;
-    width: 250px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.one {
+    grid-column: 1 / span 1;
+}
+
+.two {
+    grid-column: 2 / span 1;
+}
+
+.three {
+    grid-column: 3 / span 1;
+}
+
+.plan:hover {
+    transform: translateY(-10px);
 }
 
 .plan h2 {
-    margin-top: 0;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.plan p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
 }
 
 .plan ul {
     list-style: none;
     padding: 0;
+    margin-bottom: 20px;
 }
 
 .plan li {
     margin: 10px 0;
+    font-size: 1em;
+}
+
+.plan i {
+    margin-right: 10px;
 }
 
 .plan button {
-    background-color: var(--primary-color);
-    color: #fff;
+    background-color: #fff;
+    color: #333;
     border: none;
+    border-radius: 20px;
     padding: 10px 20px;
-    border-radius: 5px;
+    font-size: 1em;
     cursor: pointer;
-
+    transition: background-color 0.3s;
 }
 
+.plan button:hover {
+    background-color: #ddd;
+}
 /* start the footer section */
 body {
     font-family: Arial, sans-serif;

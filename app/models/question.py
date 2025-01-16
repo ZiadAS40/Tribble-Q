@@ -10,7 +10,7 @@ class Question(BaseModel, db.Model):
     __tablename__ = 'questions'
 
     question = db.Column(db.String(255), nullable=False)
-    options = db.Column(db.String(40), nullable=False)
+    options = db.Column(db.String(1024), nullable=False)
     answer = db.Column(db.String(255), nullable=False)
     number = db.Column(db.Integer(), nullable=False)
     category = db.Column(db.String(40), nullable=False)
