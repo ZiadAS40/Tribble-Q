@@ -20,7 +20,8 @@ def login():
             login_user(user)
             flash(f"welcome {user.username}", 'success')
             return redirect(url_for('home'))
-        return jsonify({'message': 'Invalid credentials'}), 401
+        flash('invalid username or password', 'error')
+        return redirect(url_for('auth.login'))
     return render_template('login.html')
 
 

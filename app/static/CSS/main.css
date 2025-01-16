@@ -50,6 +50,7 @@ header .container {
     font-size: 24px;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .logo i {
@@ -285,43 +286,3 @@ footer {
 }
 
 /* end the popup styling */
-.flash-messages {
-    position: fixed;
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    width: 250px;
-    border-radius: 5px;
-}
-
-.flash-message {
-    margin-bottom: 5px;
-    font-size: 16px;
-    position: relative;
-    padding: 5px; /* Add padding for spacing */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
-
-.flash-success {
-    border-radius: 5px;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-}
-
-.flash-info {
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-    color: #0c5460;
-}
-
-.flash-warning {
-    background-color: #fff3cd;
-    border-color: #ffeeba;
-    color: #856404;
-}
-
-.hidden {
-    display: none;
-}

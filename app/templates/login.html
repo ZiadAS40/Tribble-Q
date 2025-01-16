@@ -1,33 +1,38 @@
-{% extends "base.html" %}
-
-{% block title %}
-    Login
-{% endblock %}
-
-{% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='CSS/signup.css') }}">
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %} Login {% endblock %} {% block styles
+%}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='CSS/signup.css') }}"
+/>
+{% endblock %} {% block content %}
 <section>
-
-    <div class="container">
-        <div class="form-container">
-            <h2>Login</h2>
-        <form action="/login" method="post">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-            </div>
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+      <div class="flash-message flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+    <div class="form-container">
+      <h2>Login</h2>
+      <form action="/login" method="post">
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
         </div>
         <button type="submit">Login</button>
-    </form>
-    <p>You don't have an account? <a href="{{ url_for('auth.signup') }}">Signup</a></p>
-</div>
-</div>
+      </form>
+      <p>
+        You don't have an account?
+        <a href="{{ url_for('auth.signup') }}">Signup</a>
+      </p>
+    </div>
+  </div>
 </section>
 {% endblock %}
-
