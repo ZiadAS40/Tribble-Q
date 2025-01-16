@@ -27,8 +27,14 @@
                     </ul>
                 </nav>
                 <div class="auth-buttons">
+                    {% if authenticated %}
                     <button class="login" onclick="location.href='{{ url_for('auth.login')}}'">Log in</button>
                     <button class="signup" onclick="location.href='{{ url_for('auth.signup') }}'">Sign up</button>
+                    {% else %}
+                    <form action="{{ url_for('auth.logout') }}" method="post" style="display: inline;">
+                        <button type="submit" class="logout">Log out</button>
+                    </form>
+                    {% endif %}
                 </div>
         </div>
     </header>

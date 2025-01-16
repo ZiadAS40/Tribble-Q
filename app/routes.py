@@ -26,6 +26,11 @@ db.init_app(app)
 login_manager = LoginManager(app)
 
 
+
+@app.context_processor
+def inject_authentication_status():
+    return {'authenticated': current_user.is_authenticated}
+
 @login_manager.user_loader
 def load_user(user_id):
     """implement the session manager"""
@@ -34,7 +39,7 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', user_status=current_user.is_authenticated)
 
 @app.route('/categories')
 def cate():
