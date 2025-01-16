@@ -205,8 +205,31 @@ header .container {
     grid-column: 1 / span 1;
 }
 
+
 .two {
     grid-column: 2 / span 1;
+}
+
+.one button {
+    background-color: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
+}
+
+.one button:hover {
+    background-color: #4a90e2;
+    color: var(--background-color);
+}
+
+.two button {
+    background-color: #aaa;
+    color: #fff;
+    cursor: not-allowed;
+}
+.three button {
+    background-color: #aaa;
+    color: #fff;
+    cursor: not-allowed;
 }
 
 .three {
@@ -243,19 +266,14 @@ header .container {
 }
 
 .plan button {
-    background-color: #fff;
-    color: #333;
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
     font-size: 1em;
-    cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.plan button:hover {
-    background-color: #ddd;
-}
+
 /* start the footer section */
 body {
     font-family: Arial, sans-serif;

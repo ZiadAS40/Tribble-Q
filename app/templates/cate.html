@@ -1,81 +1,82 @@
-{% extends "base.html" %}
-
-
-{% block title %}Categories{% endblock %}
-
-{% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='CSS/cate.css') }}">
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Categories{% endblock %} {% block
+styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='CSS/cate.css') }}"
+/>
+{% endblock %} {% block content %}
 <section class="cate">
-    <div class="container">
-        <div class="card card1">
-            <div class="card-image"></div>
-                <ul>
-                    <li>Enhance your vocabulary and grammar skills.</li>
-                    <li>Explore classic and contemporary literature.</li>
-                    <li>Improve your writing and communication abilities.</li>
-                    <li>Engage in interactive language exercises</li>
-                </ul>
-            <button class="cate-button">Explore</button>
-        </div>
-        <div class="card card2">
-            <div class="card-image"></div>
-                <ul>
-                    <li>Enhance your vocabulary and grammar skills.</li>
-                    <li>Explore classic and contemporary literature.</li>
-                    <li>Improve your writing and communication abilities.</li>
-                    <li>Engage in interactive language exercises</li>
-                </ul>
-            <button class="cate-button" onclick="location.href='{{ url_for('en') }}'">Explore</button>
-        </div>
-        <div class="card card3">
-            <div class="card-image"></div>
-            <ul>
-                <li>Enhance your vocabulary and grammar skills.</li>
-                <li>Explore classic and contemporary literature.</li>
-                <li>Improve your writing and communication abilities.</li>
-                <li>Engage in interactive language exercises</li>
-            </ul>
-            <button class="cate-button">Explore</button>
-        </div>
-        <div class="card card4">
-            <div class="card-image"></div>
-            <ul>
-                <li>Enhance your vocabulary and grammar skills.</li>
-                <li>Explore classic and contemporary literature.</li>
-                <li>Improve your writing and communication abilities.</li>
-                <li>Engage in interactive language exercises</li>
-            </ul>
-            <button class="cate-button">Explore</button>
-        </div>
-        <div class="card card5">
-            <div class="card-image"></div>
-            <ul>
-                <li>Enhance your vocabulary and grammar skills.</li>
-                <li>Explore classic and contemporary literature.</li>
-                <li>Improve your writing and communication abilities.</li>
-                <li>Engage in interactive language exercises</li>
-            </ul>
-            <button class="cate-button">Explore</button>
-
-        </div>
-        <div class="card card6">
-            <div class="card-image"></div>
-            <ul>
-                <li>Enhance your vocabulary and grammar skills.</li>
-                <li>Explore classic and contemporary literature.</li>
-                <li>Improve your writing and communication abilities.</li>
-                <li>Engage in interactive language exercises</li>
-            </ul>
-            <button class="cate-button">Explore</button>
-        </div>
+  <div class="cate-container">
+    <div class="card">
+      <div class="card-image en"></div>
+      <ul>
+        <li>Enhance your vocabulary and grammar skills.</li>
+        <li>Explore classic and contemporary literature.</li>
+        <li>Improve your writing and communication abilities.</li>
+        <li>Engage in interactive language exercises</li>
+      </ul>
+      <button class="cate-button" onclick="location.href='{{ url_for('en') }}'">
+        Explore
+      </button>
     </div>
+
+    <div class="card">
+        <div class="card-image iq"></div>
+        <ul>
+            <li>Challenge your problem-solving skills.</li>
+            <li>Engage in brain-teasing puzzles.</li>
+            <li>Improve logical reasoning and critical thinking.</li>
+            <li>Track your progress with detailed analytics.</li>
+        </ul>
+        <button class="cate-button">Explore</button>
+    </div>
+    
+    <div class="card">
+        <div class="card-image code"></div>
+        <ul>
+            <li>Learn programming languages and frameworks.</li>
+            <li>Build real-world projects and applications.</li>
+            <li>Enhance your coding skills with interactive exercises.</li>
+            <li>Join a community of developers and coders.</li>
+        </ul>
+        <button class="cate-button">Explore</button>
+    </div>
+    
+    <div class="card">
+        <div class="card-image general-info"></div>
+        <ul>
+            <li>Expand your knowledge on various topics.</li>
+            <li>Stay updated with current events and trends.</li>
+            <li>Participate in quizzes and trivia challenges.</li>
+            <li>Access a vast library of informational resources.</li>
+        </ul>
+        <button class="cate-button">Explore</button>
+    </div>
+    
+    <div class="card">
+        <div class="card-image math"></div>
+        <ul>
+            <li>Master mathematical concepts and theories.</li>
+            <li>Solve complex equations and problems.</li>
+            <li>Improve analytical and quantitative skills.</li>
+            <li>Engage in interactive math exercises.</li>
+        </ul>
+        <button class="cate-button">Explore</button>
+    </div>
+    
+    <div class="card">
+        <div class="card-image physics"></div>
+        <ul>
+            <li>Understand the principles of physics.</li>
+            <li>Explore the universe and its phenomena.</li>
+            <li>Conduct experiments and simulations.</li>
+            <li>Enhance your scientific knowledge and curiosity.</li>
+        </ul>
+        <button class="cate-button">Explore</button>
+    </div>
+    
 </section>
 {% endblock %}
-
-
 
 <!-- <div class="progress-ring">
     <div class="progress-circle">

@@ -15,49 +15,77 @@
     box-sizing: border-box;
 }
 
-.cate .container, .english .container{
-    display: grid;
-    grid-template-rows: repeat(12, 1fr);
-    grid-gap: 20px;
-    height: 100%;
-}
+.cate-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 20px 0;
+    margin: 0 50px;
+    margin-bottom: 30px;
 
-
-.cate, .english {
-    height: 80vh;
 }
 
 .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: last baseline;
+
     background-color: var(--plan-card-background-color);
     padding: 8px;
     border-radius: 8px;
+    margin-top: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
+    width: 400px;
+    height: 300px;
 }
 
-.card1 { grid-area: 1 / 1 / span 6 / span 4; }
-.card2 { grid-area: 1 / 5 / span 6 / span 4; }
-.card3 { grid-area: 1 / 9 / span 6 / span 4; }
-.card4 { grid-area: 6 / 1 / span 6 / span 4; }
-.card5 { grid-area: 6 / 5 / span 6 / span 4; }
-.card6 { grid-area: 6 / 9 / span 6 / span 4; }
+
 
 
 .card-image {
     width: 100%;
     height: 40%;
     border-radius: 30px;
-    background-image: url('../Images/OIP.jpg'); /* Replace with your image path */
     background-size: cover;
     background-position: center;
 }
-  
+
+.en {
+    background-image: url('../Images/OIP.jpg');
+}
+
+.code {
+    background-image: url('../Images/code.jpg');
+}
+
+.iq {
+    background-image: url('../Images/Iq.jpg');
+}
+
+.math {
+    background-image: url('../Images/math.jpg');
+}
+
+.physics {
+    background-image: url('../Images/physics.jpg');
+}
+
+.general-info {
+    background-image: url('../Images/general\ information.jpg');
+}
 .card ul {
     font-size: 15px;
     font-weight: normal;
 
 }
 
+.card ul li {
+    list-style: none;
+    margin-top: 5px;
+}
 
 .cate-button {
     background-color: var(--primary-color);
