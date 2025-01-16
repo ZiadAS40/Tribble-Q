@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}QQQ{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/signup.css') }}">
     {% block styles %}
 
     {% endblock %}
@@ -28,13 +27,13 @@
                 </nav>
                 <div class="auth-buttons">
                     {% if authenticated %}
-                    <button class="login" onclick="location.href='{{ url_for('auth.login')}}'">Log in</button>
-                    <button class="signup" onclick="location.href='{{ url_for('auth.signup') }}'">Sign up</button>
-                    {% else %}
                     <form action="{{ url_for('auth.logout') }}" method="post" style="display: inline;">
                         <button type="submit" class="logout">Log out</button>
                     </form>
-                    {% endif %}
+                {% else %}
+                    <button class="login" onclick="location.href='{{ url_for('auth.login')}}'">Log in</button>
+                    <button class="signup" onclick="location.href='{{ url_for('auth.signup') }}'">Sign up</button>
+                {% endif %}
                 </div>
         </div>
     </header>
@@ -80,9 +79,35 @@
         </div>
     </footer>
         
-    </footer>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-button">&times;</span>
+            <p id="popup-message">This is a pop-up message!</p>
+        </div>
+    </div>
+
+
     {% block scripts %}
 
     {% endblock %}
+    <script src="{{ url_for('static', filename='JS/flash-messages.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var popup = document.getElementById('popup');
+            var closeButton = document.querySelector('.close-button');
+
+            function showPopup(message) {
+                document.getElementById('popup-message').textContent = message;
+                popup.style.display = 'block';
+            }
+
+            function hidePopup() {
+                popup.style.display = 'none';
+            }
+
+            closeButton.addEventListener('click', hidePopup);
+        });
+    </script>
 </body>
 </html>

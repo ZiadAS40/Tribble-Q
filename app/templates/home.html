@@ -4,6 +4,17 @@
 <main>
     <section class="hero" id="home">
         <div class="containter">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
             <div class="hero-container">
                 <i class="fa-brands fa-quinscape"></i>
                 <h1>Improve your knowledge and find your happiness</h1>

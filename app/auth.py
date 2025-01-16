@@ -2,7 +2,7 @@
 
 from flask import request, jsonify, flash, Blueprint, render_template, redirect, url_for
 
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 
 
@@ -18,7 +18,7 @@ def login():
         user = User.query.filter_by(username=user_name).first()
         if user and user.check_password(password):
             login_user(user)
-            flash('Login successful')
+            flash(f"welcome {user.username}", 'success')
             return redirect(url_for('home'))
         return jsonify({'message': 'Invalid credentials'}), 401
     return render_template('login.html')
@@ -28,7 +28,7 @@ def login():
 def logout():
     """Logout"""
     logout_user()
-    return jsonify({'message': 'Logout successful'})
+    return redirect(url_for('home'))
 
 @auth.route('/signup', methods=['POST', 'GET'], strict_slashes=False)
 def signup():
