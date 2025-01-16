@@ -5,6 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             console.log(flashMessages);
             flashMessages.style.display = 'none';
-        }, 500000);
+        }, 5000);
     }
 });
