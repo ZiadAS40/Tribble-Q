@@ -5,7 +5,6 @@ from flask import request, jsonify, redirect, url_for
 from flask_login import current_user
 from api.v1.views import api_v1
 import json
-from app.auth import auth
 
 
 @api_v1.route('/quiz/<string:quiz_id>', methods=['GET'], strict_slashes=False)
@@ -33,8 +32,6 @@ def submit_quiz(quiz_id):
         question = Question.query.filter_by(id=question_id).first()
         if question.is_right(answer):
             score += 1
-    
-
 
 
     if current_user.is_authenticated:

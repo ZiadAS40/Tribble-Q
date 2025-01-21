@@ -32,7 +32,6 @@
     align-items: center;
     justify-content: center;
     align-content: last baseline;
-
     background-color: var(--plan-card-background-color);
     padding: 8px;
     border-radius: 8px;
@@ -43,7 +42,10 @@
 }
 
 
-
+.card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s;
+}
 
 .card-image {
     width: 100%;
