@@ -11,14 +11,25 @@ import json
 def get_quiz(quiz_id):
     """Get a quiz"""
     from app.models.question import Question
+    from app.models.quiz import Quiz
     list_of_questions = []
+    quiz = Quiz.query.filter_by(id=quiz_id).first()
     questions = Question.query.filter_by(quiz_id=quiz_id).all()
 
     for question in questions:
         qu = {"tittle":question.question, "answers":question.options.split(","), "id":question.id}
         list_of_questions.append(qu)
+
+    quiz_data = {
+        "title": quiz.title,
+        "instructions": quiz.instructions,
+        "time": quiz.time,
+        "description": quiz.description,
+        "questions": list_of_questions
+    }
+
     
-    return jsonify(list_of_questions), 200
+    return jsonify(quiz_data), 200
 
 @api_v1.route('/quiz/<quiz_id>/submit', methods=['POST'], strict_slashes=False)
 def submit_quiz(quiz_id):

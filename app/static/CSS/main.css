@@ -380,6 +380,16 @@ footer {
     background-color: var(--background-color);
     border-radius: 5px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.popup-icon {
+    margin-bottom: 10px;
+}
+
+#popup-icon {
+    font-size: 40px;
+    color: var(--icon-color);
 }
 
 .close-button {

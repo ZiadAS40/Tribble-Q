@@ -13,7 +13,7 @@
 <section class="english">
     <div class="card-container">
             {% for quiz in quizzes %}
-            <div class="card" onclick="handleQuizClick('{{ url_for('quiz', quiz_id=quiz.id) }}')">
+            <div class="card" onclick="handleQuizClick('{{ url_for('quiz', quiz_id=quiz.id, time=quiz.time) }}')">
                 <div class="card-header">
                     <span class="badge">{{ quiz.users_with_quiz }} Enrolled</span>
                     <img src="../static/Images/OIP.jpg" alt="Course Image" class="card-image">

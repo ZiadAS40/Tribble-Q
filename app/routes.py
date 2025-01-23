@@ -48,13 +48,18 @@ def cate():
 @app.route('/quiz/<string:quiz_id>')
 def quiz(quiz_id):
     from app.models.quiz_result import QuizResult
-    result = QuizResult.query.filter_by(user_id=current_user.id, quiz_id=quiz_id).first()
-    if result:
-        return make_response(jsonify({"error": "You already toke this Quiz"}), 400)
+    from app.models.user import User
+    from app.models.quiz import Quiz
     if current_user.is_anonymous:
         return render_template('login.html')
+    user = User.query.filter_by(id=current_user.id).first()
+    quiz = Quiz.query.filter_by(id=quiz_id).first()
+    result = QuizResult.query.filter_by(user_id=current_user.id, quiz_id=quiz_id).first()
+    if result and user.role == "student":
+        return make_response(jsonify({"error": "You already toke this Quiz"}), 400)
+    print(quiz.time)
     
-    return render_template('quiz.html', quiz_id=quiz_id, user_id=current_user.id)
+    return render_template('quiz.html', quiz_id=quiz_id, user_id=current_user.id, time=quiz.time)
 
 @app.route('/quiz/english')
 def en():
@@ -87,11 +92,9 @@ def en():
 
         q["suc_users"] = len(suc_users)
         q["users_with_quiz"] = len(results)
-        print(len(suc_users))
-        print(len(results))
         q["success_rate"] = round((len(suc_users) / len(results) * 100 if len(results) > 0 else 0), 1)
-        print(q["success_rate"])
         q["time"] = quiz.time
+        print(q["time"])
         q["id"] = quiz.id
         q["cate"] = quiz.cate
         q["num_of_questions"] = len(quiz.questions)

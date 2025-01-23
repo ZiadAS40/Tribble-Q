@@ -1,53 +1,71 @@
 const popup = document.getElementById("popup");
-const closeButton = document.querySelector(".close-button");
 const showPopupButton = document.getElementById("student-btn");
 const popupContent = document.querySelector(".popup-content");
-console.log("showPopupButton:", showPopupButton);
 
 
 
-showPopupButton.addEventListener("click", showSubscriptionPopup);
-closeButton.addEventListener("click", hidePopup);
-
-
-
-
-
-
-function showPopup(message) {
-  document.getElementById("popup-message").textContent = message;
-  popup.style.display = "block";
-}
-
-function hidePopup() {
-  popup.style.display = "none";
+if (showPopupButton) {
+    showPopupButton.addEventListener("click", showSubscriptionPopup);
 }
 
 
-function handleQuizClick(url) {
-  console.log("handleQuizClick called");
-  console.log("url:", url);
-  fetch(url)
-    .then((response) => {
-      if (response.status === 400) {
-        showPopup("Subscripe to get more tries");
-      } else if (response.ok) {
-        window.location.href = url;
-      } else {
-        showPopup("An unexpected error occurred.");
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching the quiz:", error);
-      showPopup("An error occurred while trying to access the quiz.");
+
+function showPopup(message, type) {
+    const popupMessage = document.getElementById("popup-message");
+    let fontAwesomeClass = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+
+    if (type === 'success') {
+        fontAwesomeClass = 'fas fa-check-circle';
+    } else if (type === 'error') { 
+        fontAwesomeClass = 'fas fa-exclamation-circle';
+    } else {
+        fontAwesomeClass = 'fa-solid fa-message';
+    }
+    
+    if (popupMessage) {
+        popupMessage.textContent = message;
+    } else {
+        popupContent.innerHTML = `
+        <span class="close-button">&times;</span>
+        <i id="popup-icon" class="${fontAwesomeClass}"></i>
+        <p id="popup-message">${message}</p>
+        `;
+    }
+    console.log(popup);
+    
+    if (type === 'success') {
+        document.getElementById('popup-icon').style.color = 'green';
+    } else if (type === 'error') {
+        document.getElementById('popup-icon').style.color = 'red';
+    } else {
+        document.getElementById('popup-icon').style.color = '#4a90e2';
+    }
+
+    popup.style.display = "block";
+    document.querySelector(".close-button").addEventListener("click", () => {
+        popup.style.display = "none";
     });
 }
 
 
-
+function handleQuizClick(url) {
+  fetch(url)
+    .then((response) => {
+      if (response.status === 400) {
+        showPopup("Subscripe to get more tries", "error");
+      } else if (response.ok) {
+        window.location.href = url;
+      } else {
+        showPopup("An unexpected error occurred.", "error");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching the quiz:", error);
+      showPopup("An error occurred while trying to access the quiz.", "error");
+    });
+}
 
 function showSubscriptionPopup() {
-    console.log("showPopupButton clicked");
   popupContent.innerHTML = `
             <span class="close-button">&times;</span>
             <form id="subscribe-form">
@@ -65,7 +83,7 @@ function showSubscriptionPopup() {
 
   const subscribeForm = document.getElementById("subscribe-form");
   subscribeForm.addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     const promo = document.getElementById("promo").value;
 
@@ -76,10 +94,14 @@ function showSubscriptionPopup() {
       },
       body: JSON.stringify({ promo: promo }),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        popup.style.display = "none";
+      .then((response) => {
+        if (response.ok) {
+            popup.style.display = "none";
+          showPopup("Subscription successful!", "success");
+        } else {
+            popup.style.display = "none";
+            showPopup("Unvalid promocode", "error");
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
