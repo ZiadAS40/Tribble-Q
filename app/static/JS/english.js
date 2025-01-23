@@ -49,6 +49,7 @@ function showPopup(message, type) {
 
 
 function handleQuizClick(url) {
+    console.log(url);
   fetch(url)
     .then((response) => {
       if (response.status === 400) {

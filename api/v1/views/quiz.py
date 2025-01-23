@@ -50,10 +50,15 @@ def submit_quiz(quiz_id):
         from app.models.quiz_result import QuizResult
         user = User.query.filter_by(id=current_user.id).first()
         user_quiz = QuizResult.query.filter_by(user_id=user.id, quiz_id=quiz.id).first()
-        if user_quiz:
+        if user_quiz and user.role == "student":
+            print(user.role)
             return jsonify({"error": "You already toke this Quiz"}), 400
         quiz_result = QuizResult(user_id=user.id, quiz_id=quiz.id, score=score)
         quiz_result.save()
+    
+    print(score)
+    print(len(quiz.questions))
 
 
-    return jsonify({len(quiz.questions): score})
+
+    return jsonify({"length":len(quiz.questions), "score": score})

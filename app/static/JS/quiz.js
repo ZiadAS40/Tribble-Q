@@ -102,13 +102,65 @@ function submitQuiz() {
       user_id: userId,
       answers: JSON.stringify(userAnswers),
     },
-  }).then((response) => {
+  }) .then((response) => {
     if (response.ok) {
-      alert("Quiz submitted successfully!");
+      return response.json();
     } else {
-      alert("Failed to submit quiz.");
+      throw new Error("Failed to submit quiz.");
     }
-  });
-  location.href = "/";
-}
+  })
+  .then((data) => {
 
+    console.log(data);
+    
+    const score = parseInt(data.score, 10);
+    const length = parseInt(data.length, 10);
+    const okButton = document.createElement("button");
+    const popupContent = document.querySelector(".popup-content");
+    
+    okButton.innerText = "OK";
+    okButton.style.marginTop = "20px";
+    okButton.style.backgroundColor = "#4a90e2";
+    okButton.addEventListener("click", () => {
+    window.location.href = "/";
+    });
+    
+    
+    if (score >= 0.7 * length) {
+        showPopup(`You got it ${score} out of ${length}`, "success");
+    } else {
+
+    
+        const tryAgainButton = document.createElement("button");
+        tryAgainButton.innerText = "Try Again";
+        tryAgainButton.style.marginTop = "20px";
+        tryAgainButton.style.marginRight = "20px";
+        tryAgainButton.style.backgroundColor = "red";
+        popupContent.appendChild(tryAgainButton);
+        tryAgainButton.addEventListener("click", () => {
+            fetch(`/quiz/${quizId}?time=${totalQuizTime}`)
+            .then((response) => {
+                if (response.status === 400) {
+                    showPopup("Subscripe to get more tries", "error");
+                } else if (response.ok) {
+                    window.location.href = `/quiz/${quizId}?time=${totalQuizTime}`;
+                } else {
+                    showPopup("An unexpected error occurred.", "error");
+                }
+            })
+            .catch((error) => {
+              console.error("Error fetching the quiz:", error);
+              showPopup("An error occurred while trying to access the quiz.", "error");
+            });
+        });
+      showPopup(`You got it ${score} out of ${length}`, "error");
+    }
+
+    popupContent.appendChild(okButton);
+
+  })
+  .catch((error) => {
+    console.error(error);
+    alert("Failed to submit quiz.");
+  });
+}
