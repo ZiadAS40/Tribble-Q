@@ -94,8 +94,9 @@ When you're done working in the virtual environment, you can deactivate it:
 
 ```bash
 deactivate
+```
 
-## Usage
+### Usage
 
 1. Open your browser and navigate to `http://localhost:3000`.
 2. Register and log in.
