@@ -57,14 +57,12 @@ def quiz(quiz_id):
     result = QuizResult.query.filter_by(user_id=current_user.id, quiz_id=quiz_id).first()
     if result and user.role == "student":
         return make_response(jsonify({"error": "You already toke this Quiz"}), 400)
-    print(quiz.time)
     
     return render_template('quiz.html', quiz_id=quiz_id, user_id=current_user.id, time=quiz.time)
 
 @app.route('/quiz/english')
 def en():
     from app.models.quiz import Quiz
-    from app.models.user import User
     from app.models.quiz_result import QuizResult
     quizzes_en = []
     quizzes = Quiz.query.filter_by(cate="en").all()
@@ -73,7 +71,6 @@ def en():
         q = {}
         success_threshold = 0.5
         q["title"] = quiz.title
-        all_users = User.query.all()
         results = QuizResult.query.filter_by(quiz_id=quiz.id).all()
         
         acc = 0
@@ -91,10 +88,9 @@ def en():
         ]
 
         q["suc_users"] = len(suc_users)
-        q["users_with_quiz"] = len(results)
+        q["users_with_quiz"] = len(set([user_id for user_id in [quiz_result.user_id for quiz_result in results]]))
         q["success_rate"] = round((len(suc_users) / len(results) * 100 if len(results) > 0 else 0), 1)
         q["time"] = quiz.time
-        print(q["time"])
         q["id"] = quiz.id
         q["cate"] = quiz.cate
         q["num_of_questions"] = len(quiz.questions)

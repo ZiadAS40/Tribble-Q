@@ -2,58 +2,47 @@ const popup = document.getElementById("popup");
 const showPopupButton = document.getElementById("student-btn");
 const popupContent = document.querySelector(".popup-content");
 
-
-
 if (showPopupButton) {
-    showPopupButton.addEventListener("click", showSubscriptionPopup);
+  showPopupButton.addEventListener("click", showSubscriptionPopup);
 }
 
-
-
 function showPopup(message, type) {
-    const popupMessage = document.getElementById("popup-message");
-    let fontAwesomeClass = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+  let fontAwesomeClass;
 
-    if (type === 'success') {
-        fontAwesomeClass = 'fas fa-check-circle';
-    } else if (type === 'error') { 
-        fontAwesomeClass = 'fas fa-exclamation-circle';
-    } else {
-        fontAwesomeClass = 'fa-solid fa-message';
-    }
-    
-    if (popupMessage) {
-        popupMessage.textContent = message;
-    } else {
-        popupContent.innerHTML = `
+  if (type === "success") {
+    fontAwesomeClass = "fas fa-check-circle";
+  } else if (type === "error") {
+    fontAwesomeClass = "fas fa-bug";
+  } else {
+    fontAwesomeClass = "fas fa-message";
+  }
+
+  popupContent.innerHTML = "";
+  popupContent.innerHTML = `
         <span class="close-button">&times;</span>
         <i id="popup-icon" class="${fontAwesomeClass}"></i>
         <p id="popup-message">${message}</p>
         `;
-    }
-    console.log(popup);
-    
-    if (type === 'success') {
-        document.getElementById('popup-icon').style.color = 'green';
-    } else if (type === 'error') {
-        document.getElementById('popup-icon').style.color = 'red';
-    } else {
-        document.getElementById('popup-icon').style.color = '#4a90e2';
-    }
 
-    popup.style.display = "block";
-    document.querySelector(".close-button").addEventListener("click", () => {
-        popup.style.display = "none";
-    });
+  if (type === "success") {
+    document.getElementById("popup-icon").style.color = "green";
+  } else if (type === "error") {
+    document.getElementById("popup-icon").style.color = "red";
+  } else {
+    document.getElementById("popup-icon").style.color = "#4a90e2";
+  }
+
+  popup.style.display = "block";
+  document.querySelector(".close-button").addEventListener("click", () => {
+    popup.style.display = "none";
+  });
 }
 
-
 function handleQuizClick(url) {
-    console.log(url);
   fetch(url)
     .then((response) => {
       if (response.status === 400) {
-        showPopup("Subscripe to get more tries", "error");
+        showPopup("Subscripe to get more tries", "info");
       } else if (response.ok) {
         window.location.href = url;
       } else {
@@ -97,11 +86,11 @@ function showSubscriptionPopup() {
     })
       .then((response) => {
         if (response.ok) {
-            popup.style.display = "none";
+          popup.style.display = "none";
           showPopup("Subscription successful!", "success");
         } else {
-            popup.style.display = "none";
-            showPopup("Unvalid promocode", "error");
+          popup.style.display = "none";
+          showPopup("Unvalid promocode", "error");
         }
       })
       .catch((error) => {

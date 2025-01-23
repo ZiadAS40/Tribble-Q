@@ -94,7 +94,8 @@ function nextQuestion() {
 }
 
 function submitQuiz() {
-  console.log(userAnswers);
+    let score = 0;
+    let length = 0;
   fetch(`/api/v1/quiz/${quizId}/submit`, {
     method: "POST",
     headers: {
@@ -103,64 +104,61 @@ function submitQuiz() {
       answers: JSON.stringify(userAnswers),
     },
   }) .then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error("Failed to submit quiz.");
-    }
+    return response.json();
   })
   .then((data) => {
-
-    console.log(data);
-    
-    const score = parseInt(data.score, 10);
-    const length = parseInt(data.length, 10);
-    const okButton = document.createElement("button");
-    const popupContent = document.querySelector(".popup-content");
-    
-    okButton.innerText = "OK";
-    okButton.style.marginTop = "20px";
-    okButton.style.backgroundColor = "#4a90e2";
-    okButton.addEventListener("click", () => {
-    window.location.href = "/";
-    });
-    
-    
-    if (score >= 0.7 * length) {
-        showPopup(`You got it ${score} out of ${length}`, "success");
-    } else {
-
-    
-        const tryAgainButton = document.createElement("button");
-        tryAgainButton.innerText = "Try Again";
-        tryAgainButton.style.marginTop = "20px";
-        tryAgainButton.style.marginRight = "20px";
-        tryAgainButton.style.backgroundColor = "red";
-        popupContent.appendChild(tryAgainButton);
-        tryAgainButton.addEventListener("click", () => {
-            fetch(`/quiz/${quizId}?time=${totalQuizTime}`)
-            .then((response) => {
-                if (response.status === 400) {
-                    showPopup("Subscripe to get more tries", "error");
-                } else if (response.ok) {
-                    window.location.href = `/quiz/${quizId}?time=${totalQuizTime}`;
-                } else {
-                    showPopup("An unexpected error occurred.", "error");
-                }
-            })
-            .catch((error) => {
-              console.error("Error fetching the quiz:", error);
-              showPopup("An error occurred while trying to access the quiz.", "error");
+      score += parseInt(data.score, 10);
+      length += parseInt(data.length, 10);
+      const okButton = document.createElement("button");
+      const popupContent = document.querySelector(".popup-content");
+      
+      okButton.innerText = "OK";
+      okButton.style.marginTop = "20px";
+      okButton.style.backgroundColor = "#4a90e2";
+      okButton.addEventListener("click", () => {
+      window.location.href = "/";
+      });
+      
+      const tryAgainButton = document.createElement("button");
+      tryAgainButton.innerText = "Try Again";
+      tryAgainButton.style.marginTop = "20px";
+      tryAgainButton.style.marginRight = "20px";
+      tryAgainButton.style.backgroundColor = "red";
+      
+      if (score >= 0.7 * length) {
+          showPopup(`You got it ${score} out of ${length}`, "success");
+          tryAgainButton.style.display = "none";
+      } else {
+      
+      
+          tryAgainButton.addEventListener("click", () => {
+              fetch(`/quiz/${quizId}?time=${totalQuizTime}`)
+              .then((response) => {
+                  if (response.status === 400) {
+                      showPopup("Subscripe to get more tries", "error");
+                      tryAgainButton.style.display = "none";
+                  } else if (response.ok) {
+                      window.location.href = `/quiz/${quizId}?time=${totalQuizTime}`;
+                  } else {
+                      showPopup("An unexpected error occurred.", "error");
+                  }
+              })
+              .catch((error) => {
+                  console.error("Error fetching the quiz:", error);
+                  showPopup("An error occurred while trying to access the quiz.", "error");
+                });
             });
-        });
-      showPopup(`You got it ${score} out of ${length}`, "error");
-    }
-
-    popupContent.appendChild(okButton);
-
-  })
-  .catch((error) => {
+            
+            
+            showPopup(`You got it ${score} out of ${length}`, "error");
+        }
+        
+      popupContent.appendChild(tryAgainButton);
+      popupContent.appendChild(okButton);
+})
+.catch((error) => {
     console.error(error);
-    alert("Failed to submit quiz.");
-  });
+    showPopup("An error occurred while trying to submit the quiz.", "error");
+});
+
 }
