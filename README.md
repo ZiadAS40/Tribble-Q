@@ -77,7 +77,7 @@ Follow these steps to set up and run the project in a virtual environment.
     With the virtual environment activated, install the necessary packages using the `requirements.txt` file:
 
     ```bash
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
     ```
 
 6. **Run the Project**
@@ -102,8 +102,8 @@ deactivate
 2. Register and log in.
 3. Try some quizzes.
 4. Go the subscription section.
-5. Subscripe in the first one and enter the promocode 'QQQ100'.
-6. you can also make pouplate files and make quizzes 'see populate_quizzeis.py for reference'
+5. Subscripe in the first one and enter the promocode `QQQ100`.
+6. you can also make pouplate files and make quizzes `see populate_quizzeis.py for reference`
 7. you can populate with 
     ```bash
     python3 -m your_file
