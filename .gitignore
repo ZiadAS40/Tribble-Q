@@ -83,6 +83,17 @@ ipython_config.py
 # pyenv
 .python-version
 
+# virtualenv
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# pipenv
+Pipfile.lock
+
 # celery beat schedule file
 celerybeat-schedule
 

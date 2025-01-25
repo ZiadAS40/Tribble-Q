@@ -39,16 +39,22 @@ def signup():
         user_name = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        confirm_password = request.form['confirm_password']
         user_with_email = User.query.filter_by(email=email).first()
         user_with_username = User.query.filter_by(username=user_name).first()
 
         if user_with_username:
             flash('the user name already exist', 'error')
             return redirect(url_for('auth.signup'))
-        
+
         if user_with_email:
             flash(f"email address already exitst\nplease choose different email", 'error')
             return redirect(url_for('auth.signup'))
+
+        if password != confirm_password:
+            flash('password do not match', 'error')
+            return redirect(url_for('auth.signup'))
+
         user_dict = {}
         user_dict['username'] = user_name
         user_dict['email'] = email
