@@ -1,4 +1,3 @@
-
 let questions = [];
 
 const quizContainer = document.getElementById("quiz-container");
@@ -7,39 +6,32 @@ const quizId = quizContainer.getAttribute("data-quiz-id");
 const userId = quizContainer.getAttribute("data-user-id");
 let timeLeft = parseInt(quizContainer.getAttribute("data-time"), 10) * 60;
 const totalQuizTime = timeLeft;
-
-
-fetch(`/api/v1/quiz/${quizId}`)
-  .then((response) => response.json())
-  .then((data) => {
-    questions = data.questions;
-    currentQuestionIndex = 0;
-    const progressPercentage = ((totalQuizTime - timeLeft) / totalQuizTime) * 100;
-    progressBar.style.width = progressPercentage + "%";
-    startTimer();
-    renderQuestion();
-  })
-  .catch((error) => {
-    alert("Failed to load quiz. Please try again later.");
-  });
-console.log("timeLeft", timeLeft);
 const progressBar = document.getElementById("progress-bar");
 
+async function main() {
+  const res = await fetch(`/api/v1/quiz/${quizId}`).catch((err) => {
+    showPopup(`Unexpected error: ${err}`, "error");
+  });
+  const data = await res.json();
+  console.log(data);
+  questions = data.questions;
+  startTimer();
+  renderQuestion();
+}
+
 function startTimer() {
-    console.log("timeLeft", timeLeft);
-    const timerInterval = setInterval(() => {
-        console.log("timeLeft", timeLeft);
-        if (timeLeft <= 0) {
+  const timerInterval = setInterval(() => {
+    if (timeLeft <= 0) {
       clearInterval(timerInterval);
       submitQuiz();
     } else {
       timeLeft--;
-      const progressPercentage = ((totalQuizTime - timeLeft) / totalQuizTime) * 100;
+      const progressPercentage =
+        ((totalQuizTime - timeLeft) / totalQuizTime) * 100;
       progressBar.style.width = progressPercentage + "%";
     }
   }, 1000);
 }
-
 
 let currentQuestionIndex = 0;
 const userAnswers = {};
@@ -94,8 +86,8 @@ function nextQuestion() {
 }
 
 function submitQuiz() {
-    let score = 0;
-    let length = 0;
+  let score = 0;
+  let length = 0;
   fetch(`/api/v1/quiz/${quizId}/submit`, {
     method: "POST",
     headers: {
@@ -103,62 +95,64 @@ function submitQuiz() {
       user_id: userId,
       answers: JSON.stringify(userAnswers),
     },
-  }) .then((response) => {
-    return response.json();
   })
-  .then((data) => {
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
       score += parseInt(data.score, 10);
       length += parseInt(data.length, 10);
       const okButton = document.createElement("button");
       const popupContent = document.querySelector(".popup-content");
-      
+
       okButton.innerText = "OK";
       okButton.style.marginTop = "20px";
       okButton.style.backgroundColor = "#4a90e2";
       okButton.addEventListener("click", () => {
-      window.location.href = "/";
+        window.location.href = "/";
       });
-      
+
       const tryAgainButton = document.createElement("button");
       tryAgainButton.innerText = "Try Again";
       tryAgainButton.style.marginTop = "20px";
       tryAgainButton.style.marginRight = "20px";
       tryAgainButton.style.backgroundColor = "red";
-      
+
       if (score >= 0.7 * length) {
-          showPopup(`You got it ${score} out of ${length}`, "success");
-          tryAgainButton.style.display = "none";
+        showPopup(`You got it ${score} out of ${length}`, "success");
+        tryAgainButton.style.display = "none";
       } else {
-      
-      
-          tryAgainButton.addEventListener("click", () => {
-              fetch(`/quiz/${quizId}?time=${totalQuizTime}`)
-              .then((response) => {
-                  if (response.status === 400) {
-                      showPopup("Subscripe to get more tries", "error");
-                      tryAgainButton.style.display = "none";
-                  } else if (response.ok) {
-                      window.location.href = `/quiz/${quizId}?time=${totalQuizTime}`;
-                  } else {
-                      showPopup("An unexpected error occurred.", "error");
-                  }
-              })
-              .catch((error) => {
-                  console.error("Error fetching the quiz:", error);
-                  showPopup("An error occurred while trying to access the quiz.", "error");
-                });
+        tryAgainButton.addEventListener("click", () => {
+          fetch(`/quiz/${quizId}?time=${totalQuizTime}`)
+            .then((response) => {
+              if (response.status === 400) {
+                showPopup("Subscripe to get more tries", "error");
+                tryAgainButton.style.display = "none";
+              } else if (response.ok) {
+                window.location.href = `/quiz/${quizId}?time=${totalQuizTime}`;
+              } else {
+                showPopup("An unexpected error occurred.", "error");
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching the quiz:", error);
+              showPopup(
+                "An error occurred while trying to access the quiz.",
+                "error"
+              );
             });
-            
-            
-            showPopup(`You got it ${score} out of ${length}`, "error");
-        }
-        
+        });
+
+        showPopup(`You got it ${score} out of ${length}`, "error");
+      }
+
       popupContent.appendChild(tryAgainButton);
       popupContent.appendChild(okButton);
-})
-.catch((error) => {
-    console.error(error);
-    showPopup("An error occurred while trying to submit the quiz.", "error");
-});
-
+    })
+    .catch((error) => {
+      console.error(error);
+      showPopup("An error occurred while trying to submit the quiz.", "error");
+    });
 }
+
+main();

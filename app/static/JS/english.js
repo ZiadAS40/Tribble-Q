@@ -88,9 +88,16 @@ function showSubscriptionPopup() {
         if (response.ok) {
           popup.style.display = "none";
           showPopup("Subscription successful!", "success");
-        } else {
+        } else if (response.status == 400) {
           popup.style.display = "none";
-          showPopup("Unvalid promocode", "error");
+
+        response.json().then(msgObj => {
+            if (msgObj.error){
+            showPopup(msgObj.error, "error");
+            } else if (msgObj.msg) {
+            showPopup(msgObj.msg, "msg");
+            }
+        })
         }
       })
       .catch((error) => {

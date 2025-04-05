@@ -36,14 +36,15 @@ def submit_quiz(quiz_id):
     """Submit a quiz"""
     from app.models.question import Question
     from app.models.quiz import Quiz
+
     user_answers = request.headers.get('answers')
     quiz = Quiz.query.filter_by(id=quiz_id).first()
     score = 0
+
     for question_id, answer in json.loads(user_answers).items():
         question = Question.query.filter_by(id=question_id).first()
         if question.is_right(answer):
             score += 1
-
 
     if current_user.is_authenticated:
         from app.models.user import User
@@ -51,14 +52,8 @@ def submit_quiz(quiz_id):
         user = User.query.filter_by(id=current_user.id).first()
         user_quiz = QuizResult.query.filter_by(user_id=user.id, quiz_id=quiz.id).first()
         if user_quiz and user.role == "student":
-            print(user.role)
             return jsonify({"error": "You already toke this Quiz"}), 400
         quiz_result = QuizResult(user_id=user.id, quiz_id=quiz.id, score=score)
         quiz_result.save()
-    
-    print(score)
-    print(len(quiz.questions))
-
-
 
     return jsonify({"length":len(quiz.questions), "score": score})

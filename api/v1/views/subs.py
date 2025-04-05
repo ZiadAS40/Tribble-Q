@@ -14,10 +14,12 @@ def check_promo():
     from app.models.user import User
     promo_code = request.json.get('promo')
     user = User.query.filter_by(id=current_user.id).first()
-    print(promo_code)
-    print(promos[0])
+
+
     if promo_code in promos:
+        if user.role != 'student':
+            return jsonify({'msg': "You already in this Plan."}), 400
         user.role = 'pro-student'
         user.save()
-        return jsonify({"valid": True}), 200
-    return jsonify({"valid": False}), 400
+        return jsonify({"msg": "Subscription successful!"}), 200
+    return jsonify({"error": "Unvalid promocode"}), 400
